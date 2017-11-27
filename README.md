@@ -3,4 +3,4 @@
 ### Form Fashion
 
 This is what it looks like.
-![preview image][docs/preview.png]
+![preview image](docs/preview.png)
