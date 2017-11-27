@@ -1,30 +1,89 @@
-<html>
-    <head>
-        <script type="text/javascript" src="Chart.bundle.js"></script>
-        <script type="text/javascript" src="main.js"></script>
-        <style type="text/css">
-            body {
-              margin: 10px;
-              white-space: nowrap;
-              height: 500px;
-              width: 750px;
-            }
-      
-            h1 {
-              font-size: 15px;
-            }
-      
-            #container {
-              align-items: center;
-              display: flex;
-              justify-content: space-between;
-            }
-          </style>
-    </head>
-    <body>
-        <h1>Search Z Score!</h1>
-        <div>
-            <canvas id="canvas"></canvas>
-        </div>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Z Score Extension</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="popper.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">Search Z Score</div>
+        <hr>
+        <form>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Z">Z:</label>
+                        <input type="number" placeholder="0.00" id="Z" autocomplete="off" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="F-val">Proportion:</label>
+                        <input type="text" readonly="readonly" id="F-val" class="form-control form-control-sm">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="F">Proportion:</label>
+                    <input type="number" placeholder="0.00000" id="F" autocomplete="off" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+
+                    <label for="Z-val-lower">Z:</label>
+                    <input type="text" readonly="readonly" id="Z-val-lower" class="form-control form-control-sm">
+
+                </div>
+                <div class="form-group col">
+                    <label for="F-val-lower">Proportion:</label>
+                    <input type="text" readonly="readonly" id="F-val-lower" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col">
+                    <label for="Z-val-upper">Z:</label>
+                    <input type="text" readonly="readonly" id="Z-val-upper" class="form-control form-control-sm">
+
+                </div>
+                <div class="form-group col">
+                    <label for="F-val-upper">Proportion:</label>
+                    <input type="text" readonly="readonly" id="F-val-upper" class="form-control form-control-sm">
+                </div>
+            </div>
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-3">
+                    <input type="number" id="foo" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-2">
+                    <select name="operator" id="operator" class="form-control form-control-sm">
+                        <option value="-">-</option>
+                        <option value="+">+</option>
+                    </select>
+                </div>
+                <div class="form-group col-3">
+                    <input type="number" id="bar" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-1">
+                    <button id="calc-button" class="btn btn-sm btn-primary m-auto">=</button>
+                </div>
+                <div class="form-group col-3">
+                    <input type="number" id="baz" class="form-control form-control-sm">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
 </html>

@@ -1,73 +1,90 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log(this);
-    this._seed = Date.now();
+$(function(){
+    var table = [],
+        allF = [];
+    // use promise;
+    $.getJSON('standard-normal-table.json', function(data){
+        table = data;
+        for(i = 0; i< table.length; i++){
+            let stack = table[i];
+            for(j = 0; j < 10; j++){
+                let F = stack.minors[j],
+                    minor = j / 100,
+                    major = stack.major,
+                    Z = Math.round((major + minor) * 1e5) / 1e5;
+                allF.push({'F': F, 'Z': Z});
+                allF.push({'F': Math.round(1e5 - F * 1e5) / 1e5, 'Z': Z * -1});
+            }
+        }
+    });
 
-    var rand = function(min, max) {
-        var seed = this._seed;
-        min = min === undefined ? 0 : min;
-        max = max === undefined ? 1 : max;
-        this._seed = (seed * 9301 + 49297) % 233280;
-        return min + (this._seed / 233280) * (max - min);
-    };
+    $('form').submit(function(e){
+        e.preventDefault();
+    });
 
-    var randomScalingFactor = function() {
-        console.log(Math.round(rand(-100, 100)));
-		return Math.round(rand(-100, 100));
-    };
-    
-    var config = {
-        type: 'line',
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "Proportion by Z-Score",
-                fill: true,
-                backgroundColor: "rgb(75, 192, 192)",
-                borderColor: "rgb(75, 192, 192)",
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor()
-                ],
-            }]
-        },
-        options: {
-            responsive: true,
-            title:{
-                display:true,
-                text:'Chart.js Line Chart'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest'
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Z Score'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Proportion'
-                    }
-                }]
+    $('#Z').change(function(){
+        var Z = parseFloat($(this).val());
+        const isPositive = Z > 0 ? true : false;
+        Z = Math.abs(Z);
+        if(Z >= 0 && Z <= 4.09){
+            let major = Math.floor(Z * 10) / 10,
+                minor = Math.floor(Z * 100 % 10);
+            let value = findF(major, minor);
+            setF(isPositive ? value : ((1e5 - value * 1e5) / 1e5));
+        }
+        else{
+            setF('');
+        }
+    });
+
+    $('#F').change(function(){
+        const F = parseFloat($('#F').val());
+        setBound(F);
+    });
+
+    $('#calc-button').click(function(e){
+        e.stopPropagation();
+        let foo = $('#foo').val(),
+            bar = $('#bar').val(),
+            operator = $('#operator').val();
+        let baz = 0;
+        baz = (Math.round(parseFloat(foo)*1e5) + (operator === '+' ? 1 : -1) * Math.round(parseFloat(bar)*1e5)) / 1e5;
+        $('#baz').val(baz);
+    });
+
+    var findF = function(major, minor){
+        for(i = 0; i< table.length; i++){
+            let stack = table[i];
+            if(stack.major === major){
+                return stack.minors[minor];
             }
         }
     };
 
-    var ctx = document.getElementById("canvas").getContext("2d");
-    new Chart(ctx, config);
+    var setF = function(value){
+        $('#F-val').val(value);
+    }
 
-});
+    var setBound = function(F){
+        let lowerF = -Infinity,
+            lowerZ = 0,
+            upperF = Infinity,
+            upperZ = 0;
+        for(i = 0; i < allF.length; i++){
+            let t = allF[i].F;
+            if(t > F && t < upperF){
+                upperF = t;
+                upperZ = allF[i].Z;
+            }else if(t < F && t > lowerF){
+                lowerF = t;
+                lowerZ = allF[i].Z;
+            }else if(t === F){
+                lowerF = upperF = t;
+                lowerZ = upperZ = allF[i].Z;
+            }
+        }
+        $('#Z-val-lower').val(lowerZ);
+        $('#F-val-lower').val(lowerF);
+        $('#Z-val-upper').val(upperZ);
+        $('#F-val-upper').val(upperF);
+    }
+})
