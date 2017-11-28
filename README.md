@@ -21,5 +21,5 @@ This is what it looks like.
 - you can also use the **zscore** folder directly
 
 #### Steps:
-1. Open Chrome, navigate to chrome://extensions
+1. Open Chrome, navigate to [chrome://extensions](chrome://extensions)
 2. drag the .crx file or the zscore folder, drop into the page to add the extension
