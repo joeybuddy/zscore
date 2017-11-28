@@ -6,7 +6,7 @@
 
 1. find the proportion for a given standard score
 2. find the upper and lower bounds of Z and corresponding proportion, for a given proportion value
-3. a stupid-simple *calculator* if you want to do a quick addition or subtraction with the extension page
+3. a stupid-simple *calculator* if you want to do a quick addition or subtraction within the extension page
 
 **Notes** The proportion means a probability that a statistic is less than Z (i.e. between negative infinity and Z).
 
