@@ -2,12 +2,17 @@
     "manifest_version": 2,
     "version": "0.1",
     "name": "Z Score",
-    "description": "Quickly search normal distribution z-score and proportion from chrome.",
+    "description": "Quickly search standard normal distribution z score and its proportion, or inverse.",
 
     "author": "https://github.com/joeybuddy",
     "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "main.html"
+    },
+    "icons":{
+        "16": "icon.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
     },
     "options_page": "options.html",
     "options_ui": {
@@ -15,11 +20,6 @@
         "page": "options.html"
     },
     "permissions": [
-        "tabs",
-        "storage"
     ],
-    "short_name": "zscore",
-    "storage": {
-        "state_data": "state_data.json"
-    }
+    "short_name": "zscore"
 }
